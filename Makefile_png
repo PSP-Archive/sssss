@@ -1,0 +1,36 @@
+TARGET = ssssspng
+
+BUILD_PRX=1
+
+USE_KERNEL_LIBC=1
+USE_KERNEL_LIBS=1
+
+PRX_EXPORTS=exports.exp
+
+OBJS	=	exports.o
+OBJS	+=	thread.o
+OBJS	+=	setjmp.o
+OBJS	+=	mymalloc.o
+OBJS	+=	stdio.o
+OBJS	+=	syslibc.o
+OBJS	+=	dummy.o
+#OBJS	+=	nidresolve.o
+OBJS	+=	ssmemutl.o
+OBJS	+=	sscommon.o
+OBJS	+=	inicommon.o
+OBJS	+=	sspng.o
+OBJS	+=	main.o
+
+LIBCDFLAGS = -DF_fopen -DF_fclose -DF_fflush -DF_fread -DF_fwrite -DF_fputc -DF_getfdtype -DF__stdio
+
+INCDIR = 
+CFLAGS = -O2 -G0 -Wall -fno-strict-aliasing -fno-builtin-printf -DMODE_PNG $(LIBCDFLAGS)
+CXXFLAGS = $(CFLAGS) -fno-exceptions -fno-rtti
+ASFLAGS = $(CFLAGS)
+
+LIBDIR = 
+LDFLAGS = -mno-crt0 -nostartfiles
+LIBS = -lini -lpng -lz -lm -lpsppower_driver -lpsprtc_driver -lpspsystemctrl_kernel
+
+PSPSDK=$(shell psp-config --pspsdk-path)
+include $(PSPSDK)/lib/build_prx.mak

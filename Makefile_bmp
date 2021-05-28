@@ -1,0 +1,32 @@
+TARGET = sssssbmp
+
+BUILD_PRX=1
+
+USE_KERNEL_LIBC=1
+USE_KERNEL_LIBS=1
+
+PRX_EXPORTS=exports.exp
+
+OBJS	=	exports.o
+#OBJS	+=	setjmp.o
+OBJS	+=	thread.o
+OBJS	+=	mymalloc.o
+OBJS	+=	syslibc.o
+#OBJS	+=	nidresolve.o
+OBJS	+=	sscommon.o
+OBJS	+=	inicommon.o
+OBJS	+=	ssbmp.o
+OBJS	+=	main.o
+
+LIBCDFLAGS =
+INCDIR = 
+CFLAGS = -O2 -G0 -Wall -fno-strict-aliasing -fno-builtin-printf -DMODE_BMP $(LIBCDFLAGS)
+CXXFLAGS = $(CFLAGS) -fno-exceptions -fno-rtti
+ASFLAGS = $(CFLAGS)
+
+LIBDIR = 
+LDFLAGS = -mno-crt0 -nostartfiles
+LIBS = -lini -lm -lpsppower_driver -lpsprtc_driver -lpspsystemctrl_kernel
+
+PSPSDK=$(shell psp-config --pspsdk-path)
+include $(PSPSDK)/lib/build_prx.mak
